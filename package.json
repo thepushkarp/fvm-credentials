@@ -4,5 +4,36 @@
     "author": "Pushkar Patel <thepushkarp@gmail.com>",
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
-    ]
+    ],
+    "types": "dist/index.d.ts",
+    "main": "dist/index.js",
+    "files": [
+        "/dist"
+    ],
+    "scripts": {
+        "prestart": "tsc",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "start": "node ./dist/fvm-did-resolver.js",
+        "test": "jest",
+        "lint": "tslint -p tsconfig.json"
+    },
+    "dependencies": {
+        "fvm-did-registrar": "^0.0.16",
+        "fvm-did-resolver": "^0.0.14"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thepushkarp/fvm-credentials.git"
+    },
+    "description": "The fvm credentials library is this.",
+    "keywords": [
+        "did-method"
+    ],
+    "bugs": {
+        "url": "https://github.com/thepushkarp/fvm-credentials/issues"
+    },
+    "homepage": "https://github.com/thepushkarp/fvm-credentials#readme",
+    "devDependencies": {
+        "@types/jest": "^29.2.3"
+    }
 }
