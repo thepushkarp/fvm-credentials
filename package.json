@@ -1,8 +1,8 @@
 {
-    "name": "@thepushkarp/fvm-credentials",
+    "name": "fvm-credentials",
     "version": "0.0.1",
-    "author": "Pushkar Patel",
+    "author": "Pushkar Patel <thepushkarp@gmail.com>",
     "contributors": [
-        "Aman Yadav"
+        "Aman Yadav <amanyadavlko2502@gmail.com>"
     ]
 }
