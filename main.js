@@ -19,18 +19,7 @@ import crypto from 'crypto';
 
 import { create } from 'ipfs-http-client';
 
-const projectId = '2IQcCvMGSRJ0qKVdEBAEA38amJa';
-const projectSecret = '842fad0b2300ddbace70d3b75b8492e1';
-const auth =
-    'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
-const ipfs = create({
-    host: 'ipfs.infura.io',
-    port: 5001,
-    protocol: 'https',
-    headers: {
-        authorization: auth,
-    },
-});
+const ipfs = create();
 
 import Web3 from 'web3';
 const web3 = new Web3();
@@ -139,7 +128,7 @@ function test() {
     ]).then((files64) => {
         console.log('FileHashList', files64);
         const privateKey =
-            '0x32a187464b8b3b73661a93d49fa30b8282df4fa82d34d5a93a01157321565ffa';
+            '0a023368713d6846a183efc74927bd130107ab2c8aca4c244a34f78312fb5939';
         genCID(files64, privateKey).then(async (cid) => {
             console.log('CID: ', cid);
             create_DID(privateKey).then((obj) => {
