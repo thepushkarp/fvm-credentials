@@ -18,7 +18,7 @@
         "lint": "tslint -p tsconfig.json"
     },
     "dependencies": {
-        "fvm-did-registrar": "^0.0.16",
+        "fvm-did-registrar": "0.0.21",
         "fvm-did-resolver": "^0.0.14"
     },
     "repository": {
