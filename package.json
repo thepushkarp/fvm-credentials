@@ -5,11 +5,11 @@
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
     ],
-    "main": "index.js",
+    "main": "./dist/index.js",
     "scripts": {
         "prestart": "tsc",
         "format": "prettier --write \"src/**/*.ts\"",
-        "start": "node ./dist/fvm-did-resolver.js",
+        "start": "node ./dist/main.js",
         "test": "jest",
         "lint": "tslint -p tsconfig.json"
     },
