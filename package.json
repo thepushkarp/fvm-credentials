@@ -5,11 +5,7 @@
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
     ],
-    "types": "dist/index.d.ts",
-    "main": "dist/index.js",
-    "files": [
-        "/dist"
-    ],
+    "main": "index.js",
     "scripts": {
         "prestart": "tsc",
         "format": "prettier --write \"src/**/*.ts\"",
