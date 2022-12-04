@@ -5,11 +5,11 @@
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
     ],
-    "main": "./dist/index.js",
+    "main": "./index.js",
     "scripts": {
         "prestart": "tsc",
         "format": "prettier --write \"src/**/*.ts\"",
-        "start": "node ./dist/main.js",
+        "start": "node ./index.js",
         "test": "jest",
         "lint": "tslint -p tsconfig.json"
     },
@@ -30,6 +30,17 @@
     },
     "homepage": "https://github.com/thepushkarp/fvm-credentials#readme",
     "devDependencies": {
-        "@types/jest": "^29.2.3"
+        "@babel/core": "^7.20.5",
+        "@types/bs58": "^4.0.1",
+        "@types/jest": "^26.0.23",
+        "@types/mocha": "^8.2.2",
+        "@types/node": "^14.14.37",
+        "babel-loader": "^9.1.0",
+        "ethers": "^5.1.0",
+        "jest": "^26.6.3",
+        "ts-jest": "^26.5.5",
+        "ts-loader": "^9.4.2",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.0"
     }
 }
