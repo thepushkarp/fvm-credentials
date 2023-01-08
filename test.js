@@ -4,6 +4,7 @@ import {
 	create_DID,
 	hash,
 	register_DID,
+	resolve_DID
 } from "./main.js";
 
 function test() {
@@ -33,3 +34,10 @@ function test() {
 }
 
 //test();
+
+
+async function test_resolve(){
+	const did = "did:wallaby:0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89";
+	console.log("here", await resolve_DID(did))
+}
+test_resolve()

@@ -8,8 +8,9 @@ console.info(cid)
 */
 
 import { createDID, registerDID } from "fvm-did-registrar";
-import * as didResolvers from "did-resolver";
-import * as didPolygon from '@ayanworks/polygon-did-resolver';
+import  {Resolver} from "did-resolver";
+import * as didFVM from 'fvm-did-resolver';
+
 /*import {promises} from "fs";
 import {readFile} from promises;*/
 
@@ -120,22 +121,37 @@ async function register_DID(did, cid, privateKey) {
 		);
 		return { address, publicKeyBase58, did };
 	} catch (error) {
-		try {
-			return error.toString().split("returnedHash")[1].split('"')[1];
-		} catch (error2) {
-			console.log(`Error occurred while registering DID ${error}`);
-			throw error2;
+		if (error){
+			try {
+				return error.toString().split("returnedHash")[1].split('"')[1];
+			} catch (error2) {
+				console.log(`Error occurred while registering DID ${error}`);
+				throw error2;
+			}
 		}
 	}
 }
 
-export { getLocationHash, genCID, create_DID, hash, register_DID };
+
+async function resolve_DID(did) {
+	try {
+		const myResolver = didFVM.getResolver()
+		const resolver = new Resolver(myResolver)
+		
+		return resolver.resolve(did)
+	} catch (error) {
+		console.log(`Error occurred while creating DID ${error}`);
+		throw error;
+	}
+}
+
+export { getLocationHash, genCID, create_DID, hash, register_DID, resolve_DID };
 //console.log(createDID("d63587a928df21367447c1db17ae68a8d4d2a90b26de1e2abe3170bf2bf4fead"))
 
 /*const signature = payload.pop()
         console.log("payload")
         console.log("Address ",  getAddress(payload, signature))*/
-
+/*
 genCID(
 	["0x2d5901cbcea77ef9e9d333672814", "0x2d5901cbcea77ef9e9d333672814"],
 	"0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89"
@@ -147,3 +163,5 @@ genCID(
 		new TextDecoder().decode(data.value)
 	);
 });
+*/
+
