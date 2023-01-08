@@ -1,24 +1,25 @@
 {
     "name": "fvm-credentials",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Pushkar Patel <thepushkarp@gmail.com>",
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
     ],
     "main": "./dist/index.js",
-    "type": "module",
     "scripts": {
-        "prestart": "tsc",
         "format": "prettier --write \"src/**/*.ts\"",
-        "start": "node ./dist/index.js",
+        "start": "npm run build && node ./dist/main.js",
         "test": "jest",
         "lint": "tslint -p tsconfig.json",
         "build": "babel *.js -d dist"
     },
     "dependencies": {
         "did-resolver": "^4.0.1",
+        "dotenv": "^8.0.0",
         "fvm-did-registrar": "0.0.21",
-        "fvm-did-resolver": "^0.0.18"
+        "fvm-did-resolver": "^0.0.18",
+        "ipfs-http-client": "^56.0.2",
+        "prettier": "^2.2.1"
     },
     "repository": {
         "type": "git",
@@ -33,18 +34,16 @@
     },
     "homepage": "https://github.com/thepushkarp/fvm-credentials#readme",
     "devDependencies": {
-        "@babel/cli": "^7.19.3",
-        "@babel/core": "^7.20.5",
+        "@babel/cli": "^7.20.7",
+        "@babel/core": "^7.20.12",
         "@babel/preset-env": "^7.20.2",
         "@types/bs58": "^4.0.1",
         "@types/jest": "^26.0.23",
         "@types/mocha": "^8.2.2",
         "@types/node": "^14.14.37",
-        "babel-loader": "^9.1.0",
+        "babel-loader": "^9.1.2",
         "ethers": "^5.1.0",
         "jest": "^26.6.3",
-        "ts-jest": "^26.5.5",
-        "ts-loader": "^9.4.2",
         "webpack": "^5.75.0",
         "webpack-cli": "^5.0.0"
     }
