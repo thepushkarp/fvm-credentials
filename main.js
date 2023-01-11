@@ -136,32 +136,36 @@ async function register_DID(did, cid, privateKey) {
 async function resolve_DID(did) {
 	try {
 		const myResolver = didFVM.getResolver()
-		const resolver = new Resolver(myResolver)
+		const resolver = new Resolver({...myResolver})
 		
 		return resolver.resolve(did)
 	} catch (error) {
-		console.log(`Error occurred while creating DID ${error}`);
+		console.log(`Error occurred while resolving DID ${error}`);
+		throw error;
+	}
+}
+
+async function verify(b64_file, did) {
+	try {
+		resolve_DID(did).then( async ({didDocument, didDocumentMetadata , didResolutionMetadata})  => {
+			const encodedData = await ipfs.cat(didDocument.service[0].serviceEndpoint).next();
+			const data = new TextDecoder().decode(encodedData.value);
+			const hashList = data.split(',');
+			
+			const hash = hash(b64_file);
+
+			//TODO: verify signature
+			
+			if (hashList.indexOf(hash) == -1)
+				return {"verification": "invalid", "reason": "File Hash not present on IPFS CID from DID document"}
+
+		})
+	} catch (error) {
+		console.log(`Error occurred while verifying file ${error}`);
 		throw error;
 	}
 }
 
 export { getLocationHash, genCID, create_DID, hash, register_DID, resolve_DID };
-//console.log(createDID("d63587a928df21367447c1db17ae68a8d4d2a90b26de1e2abe3170bf2bf4fead"))
 
-/*const signature = payload.pop()
-        console.log("payload")
-        console.log("Address ",  getAddress(payload, signature))*/
-/*
-genCID(
-	["0x2d5901cbcea77ef9e9d333672814", "0x2d5901cbcea77ef9e9d333672814"],
-	"0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89"
-).then(async (cid) => {
-	console.log(cid);
-	const data = await ipfs.cat(cid).next();
-	console.log(
-		"Data read back via ipfs.cat:",
-		new TextDecoder().decode(data.value)
-	);
-});
-*/
 
