@@ -17,8 +17,8 @@
     },
     "dependencies": {
         "did-resolver": "^4.0.1",
-        "fvm-did-registrar": "0.0.21",
-        "fvm-did-resolver": "^0.0.18"
+        "fvm-did-registrar": "0.0.23",
+        "fvm-did-resolver": "^0.0.20"
     },
     "repository": {
         "type": "git",
