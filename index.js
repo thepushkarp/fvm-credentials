@@ -1,3 +1,3 @@
-import { getLocationHash, genCID, create_DID, hash, register_DID } from './main';
+import { getLocationHash, getHash, genCID, create_DID, hash, register_DID, resolve_DID, verify } from './main';
 
-export { getLocationHash, genCID, create_DID, hash, register_DID };
+export { getLocationHash, getHash, genCID, create_DID, hash, register_DID, resolve_DID, verify };
