@@ -1,6 +1,6 @@
 {
     "name": "fvm-credentials",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "author": "Pushkar Patel <thepushkarp@gmail.com>",
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
@@ -16,7 +16,7 @@
     "dependencies": {
         "did-resolver": "^4.0.1",
         "dotenv": "^8.0.0",
-        "fvm-did-registrar": "0.0.24",
+        "fvm-did-registrar": "0.0.25",
         "fvm-did-resolver": "^0.0.21",
         "ipfs-http-client": "^56.0.2",
         "prettier": "^2.2.1"

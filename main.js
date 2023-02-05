@@ -7,7 +7,7 @@ console.info(cid)
 
 */
 
-import { createDID, registerDID } from "fvm-did-registrar";
+import { createDID, registerDID, registerDIDSigner } from "fvm-did-registrar";
 import  {Resolver} from "did-resolver";
 import * as didFVM from 'fvm-did-resolver';
 
@@ -173,6 +173,29 @@ async function register_DID(did, cid, privateKey) {
 	}
 }
 
+async function register_DIDSigner(did, cid, signer) {
+	try {
+		const txHash = await registerDIDSigner(
+			did,
+			signer,
+			"https://api.hyperspace.node.glif.io/rpc/v1",
+			"0x74Cff4ee330854182D6FF5A2Bbe3449037e8b0Df",
+			cid
+		);
+		return { address, publicKeyBase58, did };
+	} catch (error) {
+		if (error){
+			try {
+				console.log(" error.toString()",  error.toString())
+				return error.toString().split("returnedHash")[1].split('"')[1];
+			} catch (error2) {
+				console.log(`Error occurred while registering DID ${error}`);
+				throw error2;
+			}
+		}
+	}
+}
+
 
 async function resolve_DID(did) {
 	try {
@@ -215,6 +238,6 @@ async function verify(b64_file, did) {
 	}
 }
 
-export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, create_DID_Address, hash, register_DID, resolve_DID, verify };
+export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, create_DID_Address, hash, register_DID, register_DIDSigner, resolve_DID, verify };
 
 
