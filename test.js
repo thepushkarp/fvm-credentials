@@ -5,8 +5,12 @@ import {
 	create_DID,
 	hash,
 	register_DID,
-	verify
+	verify,
+	genCIDFunc
 } from "./main.js";
+
+import Web3 from "web3";
+const web3 = new Web3();
 
 import { readFileSync, promises } from "fs";
 
@@ -95,7 +99,45 @@ function test_hash() {
 
 //test_hash();
 
+function sig(payload){
+	const privateKey =
+	//"0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89";
+	//"0xb17b746dcb68225f627ea22c2bfa7f57054cf96ac9952bc7141d70b4c2aeabbd";
+	"0xf974bad53de118dfe831ee84b065e8cd7f66fff82e41f7c933e412c862746302";
 
+	return web3.eth.accounts.sign(payload, privateKey).signature;
+}
+
+function test_hash_func() {
+	getB64(["index.js", "package.json", "package-lock.json"]).then(
+		(files64) => {
+			const files64Hash =  getHash(files64)
+			console.log("FileHashList", files64Hash);
+			const privateKey =
+				//"0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89";
+				//"0xb17b746dcb68225f627ea22c2bfa7f57054cf96ac9952bc7141d70b4c2aeabbd";
+				"0xf974bad53de118dfe831ee84b065e8cd7f66fff82e41f7c933e412c862746302"
+			genCIDFunc(files64, sig).then(async (cid) => {
+				console.log("CID: ", cid);
+				create_DID(privateKey).then((obj) => {
+					console.log("DID Object: ", obj);
+					register_DID(obj.did, cid, privateKey).then((tx_hash) =>
+						console.log(
+							"Successful TX_HASH of Registration",
+							tx_hash,
+							"\n Transaction is actually successfull, error because of misalignment of web3 and FVM"
+						)
+					);
+				});
+
+				//const data = await ipfs.cat(cid).next()
+				//console.log('Data read back via ipfs.cat:',  new TextDecoder().decode(data.value))
+			});
+		}
+	);
+}
+
+test_hash_func();
 
 
 async function test_resolve(){

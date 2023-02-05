@@ -91,6 +91,21 @@ async function genCID(hashList, privateKey) {
 	}
 }
 
+async function genCIDFunc(hashList, sigFunc) {
+	try {
+		const concatenatedHashes = hashList.join();
+		hashList.push(sigFunc(concatenatedHashes));
+
+		const { path } = await ipfs.add(JSON.stringify(hashList));
+		//setTimeout(() => console.log("Sleeeping"), 5000)
+		//ipfs.stop()
+		return path;
+	} catch (error) {
+		console.log(`Error occurred while creating DID ${error}`);
+		throw error;
+	}
+}
+
 function hash(base64Data) {
 	try {
 		return crypto.createHash("sha256").update(base64Data).digest("hex");
@@ -188,6 +203,6 @@ async function verify(b64_file, did) {
 	}
 }
 
-export { getLocationHash, getHash, genCID, create_DID, hash, register_DID, resolve_DID, verify };
+export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, hash, register_DID, resolve_DID, verify };
 
 
