@@ -5,7 +5,6 @@ import {
 	create_DID,
 	hash,
 	register_DID,
-	resolve_DID,
 	verify
 } from "./main.js";
 
