@@ -14,7 +14,6 @@ import * as didFVM from 'fvm-did-resolver';
 /*import {promises} from "fs";
 import {readFile} from promises;*/
 
-import { promises } from "fs";
 import crypto from "crypto";
 
 //import * as IPFS from 'ipfs'
