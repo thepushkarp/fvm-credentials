@@ -62,6 +62,20 @@ async function getLocationHash(file_locations) {
 	}
 }
 
+
+async function getHash(base64List) {
+	try {;
+		let hashList = [];
+		base64List.forEach(element => {
+			hashList.push(hash(element))
+		});
+		return hashList;
+	} catch (error) {
+		console.log(`Error occurred while hashing data ${error}`);
+		throw error;
+	}
+}
+
 async function genCID(hashList, privateKey) {
 	try {
 		const concatenatedHashes = hashList.join();
@@ -175,6 +189,6 @@ async function verify(b64_file, did) {
 	}
 }
 
-export { getLocationHash, genCID, create_DID, hash, register_DID, resolve_DID, verify };
+export { getLocationHash, getHash, genCID, create_DID, hash, register_DID, resolve_DID, verify };
 
 
