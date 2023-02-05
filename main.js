@@ -138,6 +138,18 @@ async function create_DID(privateKey) {
 	}
 }
 
+function create_DID_Address(address) {
+	try {
+		if (!address.match(/^0x[0-9a-fA-F]{40}$/))
+			throw "Address not correct";
+		
+			return {did : `did:fvm:testnet:${address}`};
+	} catch (error) {
+		console.log(`Error occurred while creating DID ${error}`);
+		throw error;
+	}
+}
+
 async function register_DID(did, cid, privateKey) {
 	try {
 		const txHash = await registerDID(
@@ -203,6 +215,6 @@ async function verify(b64_file, did) {
 	}
 }
 
-export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, hash, register_DID, resolve_DID, verify };
+export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, create_DID_Address, hash, register_DID, resolve_DID, verify };
 
 
