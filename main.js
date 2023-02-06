@@ -223,6 +223,23 @@ async function verify(b64_file, did) {
 	}
 }
 
-export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, create_DID_Address, hash, register_DID, register_DIDSigner, resolve_DID, verify };
+
+async function getHashList(did) {
+	try {
+		return resolve_DID(did).then( async ({didDocument, didDocumentMetadata , didResolutionMetadata})  => {
+			const serviceOBj = JSON.parse(didDocument[0]).service;
+			const encodedData = await ipfs.cat(serviceOBj[0].serviceEndpoint).next();
+			const data = new TextDecoder().decode(encodedData.value);
+			const hashList = JSON.parse(data);
+			
+			return hashList;
+		})
+	} catch (error) {
+		console.log(`Error occurred while verifying file ${error}`);
+		throw error;
+	}
+}
+
+export { getLocationHash, getHash, getHashList, genCID, genCIDFunc, create_DID, create_DID_Address, hash, register_DID, register_DIDSigner, resolve_DID, verify };
 
 
