@@ -151,7 +151,7 @@ async function test_resolve(){
 	//const didDoc = await resolve_DID(did);
 	//console.log("DID Doc", (JSON.parse(didDoc.didDocument[0])).service[0].serviceEndpoint);
 
-	const buff = readFileSync("package.json");
+	const buff = readFileSync("package-lock.json");
 	const base64data = buff.toString('base64');
 
 	console.log("verify", await verify( base64data, did))
