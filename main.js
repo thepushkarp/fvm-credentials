@@ -7,7 +7,7 @@ console.info(cid)
 
 */
 
-import { createDID, registerDID } from "fvm-did-registrar";
+import { createDID, registerDID, registerDIDSigner } from "fvm-did-registrar";
 import  {Resolver} from "did-resolver";
 import * as didFVM from 'fvm-did-resolver';
 
@@ -138,29 +138,49 @@ async function create_DID(privateKey) {
 	}
 }
 
+function create_DID_Address(address) {
+	try {
+		if (!address.match(/^0x[0-9a-fA-F]{40}$/))
+			throw "Address not correct";
+		
+			return {did : `did:fvm:testnet:${address}`};
+	} catch (error) {
+		console.log(`Error occurred while creating DID ${error}`);
+		throw error;
+	}
+}
+
 async function register_DID(did, cid, privateKey) {
 	try {
-		const txHash = await registerDID(
+		const tx = await registerDID(
 			did,
 			privateKey,
 			"https://api.hyperspace.node.glif.io/rpc/v1",
 			"0x74Cff4ee330854182D6FF5A2Bbe3449037e8b0Df",
 			cid
 		);
-		return { address, publicKeyBase58, did };
+		return tx.data.txnHash.hash;
 	} catch (error) {
-		if (error){
-			try {
-				console.log(" error.toString()",  error.toString())
-				return error.toString().split("returnedHash")[1].split('"')[1];
-			} catch (error2) {
-				console.log(`Error occurred while registering DID ${error}`);
-				throw error2;
-			}
-		}
+		console.log(`Error occurred while registering DID ${error}`);
+		throw error;
 	}
 }
 
+async function register_DIDSigner(did, cid, signer) {
+	try {
+		const tx = await registerDIDSigner(
+			did,
+			signer,
+			"https://api.hyperspace.node.glif.io/rpc/v1",
+			"0x74Cff4ee330854182D6FF5A2Bbe3449037e8b0Df",
+			cid
+		);
+		return tx.data.txnHash.hash;
+	} catch (error) {
+		console.log(`Error occurred while registering DID ${error}`);
+		throw error;
+	}
+}
 
 async function resolve_DID(did) {
 	try {
@@ -203,6 +223,23 @@ async function verify(b64_file, did) {
 	}
 }
 
-export { getLocationHash, getHash, genCID, genCIDFunc, create_DID, hash, register_DID, resolve_DID, verify };
+
+async function getHashList(did) {
+	try {
+		return resolve_DID(did).then( async ({didDocument, didDocumentMetadata , didResolutionMetadata})  => {
+			const serviceOBj = JSON.parse(didDocument[0]).service;
+			const encodedData = await ipfs.cat(serviceOBj[0].serviceEndpoint).next();
+			const data = new TextDecoder().decode(encodedData.value);
+			const hashList = JSON.parse(data);
+			
+			return hashList;
+		})
+	} catch (error) {
+		console.log(`Error occurred while verifying file ${error}`);
+		throw error;
+	}
+}
+
+export { getLocationHash, getHash, getHashList, genCID, genCIDFunc, create_DID, create_DID_Address, hash, register_DID, register_DIDSigner, resolve_DID, verify };
 
 

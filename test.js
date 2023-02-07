@@ -6,7 +6,9 @@ import {
 	hash,
 	register_DID,
 	verify,
-	genCIDFunc
+	genCIDFunc,
+	create_DID_Address,
+	getHashList
 } from "./main.js";
 
 import Web3 from "web3";
@@ -85,7 +87,6 @@ function test_hash() {
 						console.log(
 							"Successful TX_HASH of Registration",
 							tx_hash,
-							"\n Transaction is actually successfull, error because of misalignment of web3 and FVM"
 						)
 					);
 				});
@@ -103,8 +104,9 @@ function sig(payload){
 	const privateKey =
 	//"0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89";
 	//"0xb17b746dcb68225f627ea22c2bfa7f57054cf96ac9952bc7141d70b4c2aeabbd";
-	"0xf974bad53de118dfe831ee84b065e8cd7f66fff82e41f7c933e412c862746302";
-
+	//"0xf974bad53de118dfe831ee84b065e8cd7f66fff82e41f7c933e412c862746302";
+	//"0x13d950c61d4e7823a26099379e9c574898d54486c28865b70cbe6109b1b63852";
+	"0x8209e9f697be80337ac8d494858ed027c4687d5a10e35a297c750f175cc4bf24";
 	return web3.eth.accounts.sign(payload, privateKey).signature;
 }
 
@@ -116,7 +118,10 @@ function test_hash_func() {
 			const privateKey =
 				//"0x2d5901cbcea77ef9e9d33367281463ed10d6146c1bc08679489b338949ef2b89";
 				//"0xb17b746dcb68225f627ea22c2bfa7f57054cf96ac9952bc7141d70b4c2aeabbd";
-				"0xf974bad53de118dfe831ee84b065e8cd7f66fff82e41f7c933e412c862746302"
+				//"0xf974bad53de118dfe831ee84b065e8cd7f66fff82e41f7c933e412c862746302"
+				//"0x6160d9f121d06c0c770ecb58fa413167f6e65795565f6db7b7168c715adc75c4";
+				//"0x13d950c61d4e7823a26099379e9c574898d54486c28865b70cbe6109b1b63852"
+				"0x8209e9f697be80337ac8d494858ed027c4687d5a10e35a297c750f175cc4bf24";
 			genCIDFunc(files64, sig).then(async (cid) => {
 				console.log("CID: ", cid);
 				create_DID(privateKey).then((obj) => {
@@ -125,7 +130,6 @@ function test_hash_func() {
 						console.log(
 							"Successful TX_HASH of Registration",
 							tx_hash,
-							"\n Transaction is actually successfull, error because of misalignment of web3 and FVM"
 						)
 					);
 				});
@@ -137,15 +141,26 @@ function test_hash_func() {
 	);
 }
 
-test_hash_func();
+//test_hash_func();
 
+
+function test_address(payload){
+	console.log(create_DID_Address("0xA3168f392809CAaC21f20EF5ac99e78d4b6BbD20"))
+}
+//test_address()
+
+
+async function test_hashList(payload){
+	console.log(await getHashList("did:fvm:testnet:0xA3168f392809CAaC21f20EF5ac99e78d4b6BbD20"))
+}
+//test_hashList()
 
 async function test_resolve(){
 	const did = "did:fvm:testnet:0xA3168f392809CAaC21f20EF5ac99e78d4b6BbD20";
 	//const didDoc = await resolve_DID(did);
 	//console.log("DID Doc", (JSON.parse(didDoc.didDocument[0])).service[0].serviceEndpoint);
 
-	const buff = readFileSync("package.json");
+	const buff = readFileSync("package-lock.json");
 	const base64data = buff.toString('base64');
 
 	console.log("verify", await verify( base64data, did))
