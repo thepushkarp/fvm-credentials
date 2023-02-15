@@ -1,6 +1,6 @@
 {
     "name": "fvm-credentials",
-    "version": "0.0.24",
+    "version": "0.0.27",
     "author": "Pushkar Patel <thepushkarp@gmail.com>",
     "contributors": [
         "Aman Yadav <amanyadavlko2502@gmail.com>"
@@ -9,7 +9,7 @@
     "scripts": {
         "format": "prettier --write \"src/**/*.ts\"",
         "start": "npm run build && node ./dist/main.js",
-        "test": "jest",
+        "test": "node test.js",
         "lint": "tslint -p tsconfig.json",
         "build": "babel *.js -d dist"
     },
